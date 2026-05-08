@@ -23,6 +23,66 @@
 - 面向微信小程序工程约束：内置页面路径、组件引用、云函数调用和数据库集合等一致性检查。
 - 本地运行、便于二次开发：核心逻辑集中在 `main.py` 和 `ui.py`，可按实际模型、生成规则和校验策略继续扩展。
 
+## 快速上手
+
+以下步骤适合首次在 Windows 本地运行项目：
+
+1. 进入项目根目录。
+
+```powershell
+cd C:\path\to\miniapp
+```
+
+2. 配置 DeepSeek API Key。
+
+```powershell
+$env:DEEPSEEK_API_KEY="your_api_key"
+```
+
+3. 安装并同步依赖。项目推荐使用 `uv`，并将虚拟环境固定在项目内的 `.uv-env/` 目录。
+
+```powershell
+$env:UV_PROJECT_ENVIRONMENT="$PWD\.uv-env"
+uv sync
+```
+
+4. 启动 Web UI。
+
+```powershell
+uv run python ui.py
+```
+
+也可以在项目根目录直接双击：
+
+```text
+start_ui.bat
+```
+
+5. 打开本地页面并开始描述小程序需求。
+
+```text
+http://127.0.0.1:7860
+```
+
+生成完成后，默认小程序工程会输出到：
+
+```text
+generated_mini_program/
+```
+
+生成过程记录、需求分析、文件规划和校验报告会保存在：
+
+```text
+.crew_state/latest_generation/
+```
+
+如果只想在命令行观察 CrewAI 原生流程，可以运行：
+
+```powershell
+$env:UV_PROJECT_ENVIRONMENT="$PWD\.uv-env"
+uv run python main.py
+```
+
 ## 生成流程
 
 系统默认执行以下 6 个阶段：
@@ -73,17 +133,23 @@ generated_mini_program/
 
 这些产物用于定位生成质量问题。例如，可以判断问题来自需求分析、架构设计、文件规划、上下文整理，还是页面代码生成阶段。
 
-## 项目结构
+## 目录结构
 
 ```text
 .
-├─ main.py              # CrewAI 生成主流程
-├─ ui.py                # 本地 Web UI 和需求对话服务
-├─ start_ui.bat         # Windows 一键启动脚本
-├─ pyproject.toml       # uv 项目配置和依赖声明
-├─ requirements.txt     # pip 兼容依赖列表
-├─ uv.lock              # uv 锁定文件
-└─ 测试项/               # 历史样例或测试产物
+├─ assets/                         # 项目图标和通用静态资源
+├─ docs/                           # 设计文档、作品介绍、示例输出和演示资料
+├─ main.py                         # CrewAI 生成主流程
+├─ ui.py                           # 本地 Web UI 和需求对话服务
+├─ start_ui.bat                    # Windows 一键启动脚本
+├─ pyproject.toml                  # uv 项目配置和依赖声明
+├─ requirements.txt                # pip 兼容依赖列表
+├─ uv.lock                         # uv 锁定文件
+├─ .gitignore                      # Git 忽略规则，已排除视频和本地运行产物
+├─ .crew_state/                    # 本地生成记录，运行后产生，不上传
+├─ .tmp/                           # 临时文件目录，不上传
+├─ .venv/ 或 .uv-env/              # 本地 Python 虚拟环境，不上传
+└─ generated_mini_program/         # 默认生成的小程序工程目录，运行后产生
 ```
 
 核心文件说明：
@@ -91,6 +157,8 @@ generated_mini_program/
 - `main.py`：负责需求分析、架构设计、文件规划、页面生成、校验、重试与中间产物保存。
 - `ui.py`：提供本地 Web UI、AI 需求对话、任务状态轮询、日志清洗和对话区进度通知。
 - `start_ui.bat`：设置 Windows 启动环境并优先使用项目内 `.uv-env` 运行 Web UI。
+- `docs/`：保存项目说明文档、演示材料、示例小程序输出和作品介绍资料；视频文件已通过 `.gitignore` 排除，不会上传到 GitHub。
+- `assets/`：保存项目展示或界面中复用的图片、图标等资源。
 
 ## 环境要求
 
