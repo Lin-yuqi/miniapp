@@ -1,0 +1,36 @@
+<view class="page game-page">
+  <!-- 状态栏 -->
+  <view class="status-bar">
+    <view class="status-item">💣 剩余: {{mineCount - flagCount}}</view>
+    <view class="status-item">⏱ {{timeSeconds}}s</view>
+    <view class="mode-switch" bindtap="switchMode">
+      {{currentMode === 'dig' ? '🔍 点开' : '🚩 插旗'}}
+    </view>
+  </view>
+
+  <!-- 棋盘区域 -->
+  <view class="board">
+    <view class="board-inner">
+      <view wx:for="{{cellList}}" wx:key="index" class="{{item.cellClass}}" 
+            data-index="{{index}}" 
+            bindtap="onCellTap" 
+            bindlongpress="onCellDoubleTap">
+        <text class="cell-text">{{item.displayText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重新开始按钮 -->
+  <view class="restart-btn" bindtap="restartGame">重新开始</view>
+
+  <!-- 结束弹窗 -->
+  <view class="result-mask" wx:if="{{showResult}}" bindtap="onResultTap">
+    <view class="result-dialog" catchtap="">
+      <view class="result-title">{{resultText}}</view>
+      <view class="result-info">已扫雷数: {{resultRevealed}} / 71</view>
+      <view class="result-info">用时: {{resultTime}}s</view>
+      <view class="result-info">得分: {{resultScore}}</view>
+      <view class="result-btn" bindtap="restartGame">再来一局</view>
+    </view>
+  </view>
+</view>

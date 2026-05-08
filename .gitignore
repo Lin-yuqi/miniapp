@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+
+.tmp/
+.crew_state/
+.idea/
+
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+*.m4v
