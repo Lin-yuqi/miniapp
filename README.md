@@ -407,5 +407,5 @@ $env:PYTHONIOENCODING="utf-8"
 - 在 Web UI 中支持选择输出目录和模型参数。
 
 ## 致谢
-⭐ [@lyc-cafard](https://github.com/lyc-cafard)
+⭐ [@lyc-cafard](https://github.com/lyc-cafard), [@Lee-xingyuan](https://github.com/Lee-xingyuan)
 
